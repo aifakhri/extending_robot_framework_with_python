@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0.1 (Python 3.10.0 on win32)" generated="20220802 20:39:17.458" rpa="false" schemaversion="3">
+<suite id="s1" name="Testing With Keywords" source="C:\Users\HelmholtZ\Documents\Learning_Coding\MyProjects\extending_robot_fr\testing_with_keywords.robot">
+<test id="s1-t1" name="[Documentation] Step 1: Verify VXLAN Interface Status" line="11">
+<kw name="Open Connection" library="common" type="SETUP">
+<kw name="Connect To Device" library="commonLib">
+<var>${connect}</var>
+<arg>${ipAddr}</arg>
+<arg>${port}</arg>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<arg>${devType}</arg>
+<msg timestamp="20220802 20:39:19.264" level="INFO">${connect} = &lt;netmiko.arista.arista.AristaSSH object at 0x000001F2DC829A80&gt;</msg>
+<status status="PASS" starttime="20220802 20:39:18.086" endtime="20220802 20:39:19.264"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${connect}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20220802 20:39:19.265" level="INFO">${connect} = &lt;netmiko.arista.arista.AristaSSH object at 0x000001F2DC829A80&gt;</msg>
+<status status="PASS" starttime="20220802 20:39:19.264" endtime="20220802 20:39:19.265"/>
+</kw>
+<status status="PASS" starttime="20220802 20:39:18.085" endtime="20220802 20:39:19.265"/>
+</kw>
+<kw name="VXLAN Interface Status" library="vxlanInstance">
+<kw name="Vxlan Status" library="vxlanInstance">
+<var>${interfaceStatus}</var>
+<arg>${connect}</arg>
+<arg>${vxlanIntf}</arg>
+<msg timestamp="20220802 20:39:19.856" level="INFO">${interfaceStatus} = up</msg>
+<status status="PASS" starttime="20220802 20:39:19.266" endtime="20220802 20:39:19.856"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>"${interfaceStatus}"</arg>
+<arg>"up"</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20220802 20:39:19.856" endtime="20220802 20:39:19.857"/>
+</kw>
+<status status="PASS" starttime="20220802 20:39:19.265" endtime="20220802 20:39:19.857"/>
+</kw>
+<kw name="Close Connection" library="common" type="TEARDOWN">
+<kw name="Disconnect From Device" library="commonLib">
+<arg>${connect}</arg>
+<status status="PASS" starttime="20220802 20:39:19.858" endtime="20220802 20:39:19.871"/>
+</kw>
+<status status="PASS" starttime="20220802 20:39:19.858" endtime="20220802 20:39:19.871"/>
+</kw>
+<status status="PASS" starttime="20220802 20:39:18.083" endtime="20220802 20:39:19.872"/>
+</test>
+<test id="s1-t2" name="[Documentation] Step 2: Verify VXLAN VNI to VLAN Mapping" line="15">
+<kw name="Open Connection" library="common" type="SETUP">
+<kw name="Connect To Device" library="commonLib">
+<var>${connect}</var>
+<arg>${ipAddr}</arg>
+<arg>${port}</arg>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<arg>${devType}</arg>
+<msg timestamp="20220802 20:39:20.982" level="INFO">${connect} = &lt;netmiko.arista.arista.AristaSSH object at 0x000001F2DC8405E0&gt;</msg>
+<status status="PASS" starttime="20220802 20:39:19.875" endtime="20220802 20:39:20.982"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${connect}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20220802 20:39:20.983" level="INFO">${connect} = &lt;netmiko.arista.arista.AristaSSH object at 0x000001F2DC8405E0&gt;</msg>
+<status status="PASS" starttime="20220802 20:39:20.983" endtime="20220802 20:39:20.983"/>
+</kw>
+<status status="PASS" starttime="20220802 20:39:19.875" endtime="20220802 20:39:20.984"/>
+</kw>
+<kw name="VXLAN VNI to VLAN Mapping" library="vxlanInstance">
+<for flavor="IN">
+<var>${expected}</var>
+<value>@{vniList}</value>
+<iter>
+<var name="${expected}">{'vniId': '1100', 'mappedVlan': '100', 'serviceType': 'bridged'}</var>
+<kw name="Vxlan Vni Mapping" library="vxlanInstance">
+<var>${actualVni}</var>
+<arg>${connect}</arg>
+<arg>${vxlanIntf}</arg>
+<arg>${expected}[mappedVlan]</arg>
+<msg timestamp="20220802 20:39:21.577" level="INFO">${actualVni} = 1100</msg>
+<status status="PASS" starttime="20220802 20:39:20.986" endtime="20220802 20:39:21.577"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>"${actualVni}"</arg>
+<arg>"${expected}[vniId]"</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20220802 20:39:21.577" endtime="20220802 20:39:21.578"/>
+</kw>
+<status status="PASS" starttime="20220802 20:39:20.986" endtime="20220802 20:39:21.578"/>
+</iter>
+<iter>
+<var name="${expected}">{'vniId': '1200', 'mappedVlan': '220', 'serviceType': 'irb'}</var>
+<kw name="Vxlan Vni Mapping" library="vxlanInstance">
+<var>${actualVni}</var>
+<arg>${connect}</arg>
+<arg>${vxlanIntf}</arg>
+<arg>${expected}[mappedVlan]</arg>
+<msg timestamp="20220802 20:39:22.168" level="INFO">${actualVni} = 1200</msg>
+<status status="PASS" starttime="20220802 20:39:21.578" endtime="20220802 20:39:22.169"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>"${actualVni}"</arg>
+<arg>"${expected}[vniId]"</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20220802 20:39:22.169" endtime="20220802 20:39:22.170"/>
+</kw>
+<status status="PASS" starttime="20220802 20:39:21.578" endtime="20220802 20:39:22.170"/>
+</iter>
+<status status="PASS" starttime="20220802 20:39:20.985" endtime="20220802 20:39:22.170"/>
+</for>
+<status status="PASS" starttime="20220802 20:39:20.985" endtime="20220802 20:39:22.170"/>
+</kw>
+<kw name="Close Connection" library="common" type="TEARDOWN">
+<kw name="Disconnect From Device" library="commonLib">
+<arg>${connect}</arg>
+<status status="PASS" starttime="20220802 20:39:22.173" endtime="20220802 20:39:22.186"/>
+</kw>
+<status status="PASS" starttime="20220802 20:39:22.172" endtime="20220802 20:39:22.187"/>
+</kw>
+<status status="PASS" starttime="20220802 20:39:19.874" endtime="20220802 20:39:22.187"/>
+</test>
+<doc>Test Case With Keyword</doc>
+<status status="PASS" starttime="20220802 20:39:17.463" endtime="20220802 20:39:22.190"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="2" fail="0" skip="0" id="s1" name="Testing With Keywords">Testing With Keywords</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
