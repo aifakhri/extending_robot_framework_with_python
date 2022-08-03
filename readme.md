@@ -1,0 +1,2 @@
+# Extending Robot Framework With Python
+This is my implementation of extending Robot Framework with Python. For the use case in this repo is my virtual Data Center Network. You could check How I build the virtual network [here](https://medium.com/@zeitdeuter/bgp-evpn-and-vxlan-configuration-with-arista-veos-b1046c24d046) 
