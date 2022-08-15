@@ -9,7 +9,6 @@ def connect_to_device(ipAddr, port, usernm, passwd, device):
         "username": usernm,
         "password": passwd,
         "device_type": device,
-        "global_delay_factor": 1.5,
     }
 
     return ConnectHandler(**device)
